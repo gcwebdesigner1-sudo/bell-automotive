@@ -400,7 +400,20 @@
   </div>
 </section>
 
-<section class="cta-section" id="contact">
+
+    <!-- LEAVE A REVIEW -->
+    <section style="background: var(--white); padding: 72px 36px; text-align: center; border-top: 1px solid var(--border);">
+      <div style="max-width: 560px; margin: 0 auto;">
+        <div style="width: 58px; height: 58px; border-radius: 50%; background: #4285F4; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.7rem; color: white; font-family: sans-serif; margin-bottom: 22px;">G</div>
+        <h3 style="font-family: Playfair Display, serif; font-size: 2rem; font-weight: 700; color: var(--dark); margin-bottom: 12px;">Liked our service?</h3>
+        <p style="color: var(--muted); font-size: 0.96rem; line-height: 1.75; margin-bottom: 30px;">Leave us a Google review — it helps other Shasta County families find a shop they can trust, and means the world to our team.</p>
+        <a href="https://maps.google.com/?q=Bell+Automotive+Service+Anderson+CA" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 10px; background: #4285F4; color: white; font-weight: 700; font-size: 0.9rem; padding: 14px 30px; border-radius: 8px; text-decoration: none; letter-spacing: 0.02em; box-shadow: 0 4px 20px rgba(66,133,244,0.35);">
+          Leave Us a Review on Google
+        </a>
+      </div>
+    </section>
+
+    <section class="cta-section" id="contact">
   <div class="cta-glow" aria-hidden="true"></div>
   <div class="cta-inner">
     <span class="cta-eyebrow">Get in Touch</span>
@@ -470,6 +483,12 @@
   gsap.from('.svc-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 85%' }, y: 44, opacity: 0, duration: 0.65, stagger: 0.08, ease: 'power3.out' });
   document.querySelectorAll('.count-num').forEach(el => {
     const target = parseFloat(el.dataset.target);
+  // Fix: browsers throttle rAF on hidden tabs — jump hero to end on first focus
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible' && htl.progress() < 0.99) {
+      htl.progress(1);
+    }
+  });
     const isDecimal = !!el.dataset.decimal;
     ScrollTrigger.create({
       trigger: el, start: 'top 88%', once: true,
