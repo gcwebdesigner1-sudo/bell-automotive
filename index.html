@@ -23,8 +23,8 @@
     .top-bar a { color: rgba(255,255,255,0.88); text-decoration: none; transition: color 0.2s; }
     .top-bar a:hover { color: var(--gold); }
     .top-bar .sep { color: var(--gold); margin: 0 12px; opacity: 0.6; }
-    .nav { position: fixed; top: 36px; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: transform 0.38s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s, background 0.3s; }
-    .nav.hidden { transform: translateY(calc(-100% - 36px)); }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.96); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: transform 0.38s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s, background 0.3s; }
+    .nav.hidden { transform: translateY(-100%); }
     .nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.09); background: rgba(255,255,255,0.99); }
     .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 36px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
     .logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.5rem; color: var(--dark); letter-spacing: -0.01em; text-decoration: none; display: flex; align-items: center; gap: 0; }
@@ -166,8 +166,8 @@
     }
     @media (max-width: 768px) {
       .top-bar { font-size: 0.7rem; }
-      .nav { top: 32px; }
-      .nav.hidden { transform: translateY(calc(-100% - 32px)); }
+      .nav { top: 0; }
+      .nav.hidden { transform: translateY(-100%); }
       .hero { grid-template-columns: 1fr; gap: 44px; padding-top: 32px; }
       .hero-section { padding-top: 96px; min-height: auto; }
       .hero-frame-red, .hero-frame-gold { display: none; }
@@ -188,13 +188,7 @@
 </head>
 <body>
 
-<div class="top-bar">
-  Serving Anderson, Redding &amp; Shasta County Since 1999
-  <span class="sep">·</span>
-  <a href="tel:+15303651599">(530) 365-1599</a>
-  <span class="sep">·</span>
-  Mon-Fri 8AM-5:30PM &nbsp;|&nbsp; Sat 8AM-2PM
-</div>
+
 
 <nav class="nav" id="main-nav">
   <div class="nav-inner">
@@ -206,7 +200,7 @@
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="tel:+15303651599" class="btn-nav">Book Service</a>
+    
   </div>
 </nav>
 
