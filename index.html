@@ -12,7 +12,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --dark: #0F1923; --dark2: #080E15; --red: #D94F3D; --red2: #c0392b; --gold: #C9962B; --offwhite: #F8F6F2; --lightgrey: #F2F0EC; --text: #1A1A2E; --muted: #6B7280; --border: #E5E3DF; --white: #ffffff; }
+    :root {
+      --dark: #0F1923; --dark2: #080E15; --red: #D94F3D; --red2: #c0392b;
+      --gold: #C9962B; --offwhite: #F8F6F2; --lightgrey: #F2F0EC;
+      --text: #1A1A2E; --muted: #6B7280; --border: #E5E3DF; --white: #ffffff;
+    }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--offwhite); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
     .top-bar { background: var(--dark); color: rgba(255,255,255,0.7); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.04em; text-align: center; padding: 9px 24px; position: relative; z-index: 1001; }
@@ -23,10 +27,10 @@
     .nav.hidden { transform: translateY(calc(-100% - 36px)); }
     .nav.scrolled { box-shadow: 0 4px 40px rgba(0,0,0,0.09); background: rgba(255,255,255,0.99); }
     .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 36px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.5rem; color: var(--dark); letter-spacing: -0.01em; text-decoration: none; }
+    .logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.5rem; color: var(--dark); letter-spacing: -0.01em; text-decoration: none; display: flex; align-items: center; gap: 0; }
     .logo .dot { color: var(--red); }
     .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
-    .nav-links a { font-size: 0.83rem; font-weight: 500; color: #444; text-decoration: none; transition: color 0.2s; }
+    .nav-links a { font-size: 0.83rem; font-weight: 500; color: #444; text-decoration: none; letter-spacing: 0.01em; transition: color 0.2s; }
     .nav-links a:hover { color: var(--red); }
     .btn-nav { background: var(--red); color: #fff !important; font-size: 0.82rem; font-weight: 700; padding: 10px 22px; border-radius: 7px; text-decoration: none; letter-spacing: 0.02em; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 3px 14px rgba(217,79,61,0.3); }
     .btn-nav:hover { background: var(--red2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(217,79,61,0.38); }
@@ -67,8 +71,11 @@
     .section-sub { font-size: 0.96rem; color: var(--muted); max-width: 520px; line-height: 1.78; margin-bottom: 56px; }
     .services-bg { background: var(--white); }
     .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-    .svc-card { background: var(--offwhite); border: 1px solid var(--border); border-top: 3px solid transparent; border-radius: 12px; padding: 28px 22px; transition: transform 0.25s, box-shadow 0.25s, border-top-color 0.25s, background 0.2s; cursor: default; }
+    .svc-card { background: var(--offwhite); border: 1px solid var(--border); border-top: 3px solid transparent; border-radius: 12px; padding: 28px 22px; transition: transform 0.25s, box-shadow 0.25s, border-top-color 0.25s, background 0.2s; cursor: default; overflow: hidden; }
     .svc-card:hover { transform: translateY(-7px); box-shadow: 0 18px 52px rgba(0,0,0,0.11); border-top-color: var(--red); background: var(--white); }
+    .svc-img-wrap { margin: -28px -22px 20px; height: 150px; overflow: hidden; border-radius: 9px 9px 0 0; }
+    .svc-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.45s ease; filter: grayscale(8%); }
+    .svc-card:hover .svc-img-wrap img { transform: scale(1.07); filter: grayscale(0%); }
     .svc-icon { font-size: 1.9rem; margin-bottom: 14px; display: block; }
     .svc-name { font-family: 'Playfair Display', serif; font-weight: 600; font-size: 1.05rem; color: var(--dark); margin-bottom: 8px; }
     .svc-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.65; }
@@ -151,18 +158,42 @@
     .fc-text a { color: rgba(255,255,255,0.58); text-decoration: none; transition: color 0.2s; }
     .fc-text a:hover { color: #fff; }
     .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem; color: rgba(255,255,255,0.25); }
-    @media (max-width: 1024px) { .services-grid { grid-template-columns: repeat(2, 1fr); } .stats-grid { grid-template-columns: repeat(2, 1fr); } .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; } .gallery-item { height: 240px; } }
-    @media (max-width: 768px) { .top-bar { font-size: 0.7rem; } .nav { top: 32px; } .nav.hidden { transform: translateY(calc(-100% - 32px)); } .hero { grid-template-columns: 1fr; gap: 44px; padding-top: 32px; } .hero-section { padding-top: 96px; min-height: auto; } .hero-frame-red, .hero-frame-gold { display: none; } .hero-img { height: 300px; } .hero-rating { left: 16px; bottom: 16px; } .about-grid { grid-template-columns: 1fr; gap: 44px; } .about-img { height: 320px; } .about-card { right: 14px; top: 14px; } .services-grid { grid-template-columns: repeat(2, 1fr); } .reviews-grid { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; gap: 32px; } .nav-links { display: none; } .footer-bottom { flex-direction: column; gap: 6px; text-align: center; } .gallery-grid { grid-template-columns: 1fr; } .gallery-item { height: 220px; } }
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+      .gallery-item { height: 240px; }
+    }
+    @media (max-width: 768px) {
+      .top-bar { font-size: 0.7rem; }
+      .nav { top: 32px; }
+      .nav.hidden { transform: translateY(calc(-100% - 32px)); }
+      .hero { grid-template-columns: 1fr; gap: 44px; padding-top: 32px; }
+      .hero-section { padding-top: 96px; min-height: auto; }
+      .hero-frame-red, .hero-frame-gold { display: none; }
+      .hero-img { height: 300px; }
+      .hero-rating { left: 16px; bottom: 16px; }
+      .about-grid { grid-template-columns: 1fr; gap: 44px; }
+      .about-img { height: 320px; }
+      .about-card { right: 14px; top: 14px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .nav-links { display: none; }
+      .footer-bottom { flex-direction: column; gap: 6px; text-align: center; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item { height: 220px; }
+    }
   </style>
 </head>
 <body>
 
 <div class="top-bar">
   Serving Anderson, Redding &amp; Shasta County Since 1999
-  <span class="sep">&middot;</span>
+  <span class="sep">·</span>
   <a href="tel:+15303651599">(530) 365-1599</a>
-  <span class="sep">&middot;</span>
-  Mon&ndash;Fri 8AM&ndash;5:30PM &nbsp;|&nbsp; Sat 8AM&ndash;2PM
+  <span class="sep">·</span>
+  Mon-Fri 8AM-5:30PM &nbsp;|&nbsp; Sat 8AM-2PM
 </div>
 
 <nav class="nav" id="main-nav">
@@ -182,7 +213,7 @@
 <section class="hero-section">
   <div class="hero">
     <div class="hero-content">
-      <div class="hero-eyebrow">Anderson, CA &nbsp;&middot;&nbsp; Est. 1999</div>
+      <div class="hero-eyebrow">Anderson, CA &nbsp;·&nbsp; Est. 1999</div>
       <h1 class="hero-title">
         <span class="line"><span class="line-inner">The Shop That</span></span>
         <span class="line"><span class="line-inner">Treats You Like</span></span>
@@ -191,7 +222,7 @@
       <p class="hero-sub"><span class="line-inner">Honest diagnostics. Fair prices. Since 1999.</span></p>
       <div class="hero-ctas">
         <a href="tel:+15303651599" class="btn-primary">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012.81 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.84a16 16 0 006.29 6.29l1.1-1.1a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012.81 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.84a16 16 0 006.29 6.29l1.1-1.1a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
           Call (530) 365-1599
         </a>
         <a href="#services" class="btn-secondary">See Our Services</a>
@@ -206,8 +237,8 @@
     <div class="hero-visual">
       <div class="hero-frame-red" aria-hidden="true"></div>
       <div class="hero-frame-gold" aria-hidden="true"></div>
-      <img src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=1200&q=80" alt="Professional auto service technician at Bell Automotive Anderson CA" class="hero-img" loading="eager" decoding="async" />
-      <div class="hero-rating">
+      <img src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=1200&q=80" alt="Professional auto service technician at Bell Automotive in Anderson CA" class="hero-img" loading="eager" decoding="async" />
+      <div class="hero-rating" aria-label="4.8 stars on Google, 90+ verified reviews">
         <div><div class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div></div>
         <div>
           <div class="rating-label">4.8 Stars on Google</div>
@@ -228,16 +259,56 @@
   <div class="section-inner">
     <span class="eyebrow">What We Do</span>
     <h2 class="section-title">Everything Your Vehicle Needs</h2>
-    <p class="section-sub">From routine maintenance to complex diagnostics &mdash; Jim and his team handle every job with expertise, transparency, and care.</p>
+    <p class="section-sub">From routine maintenance to complex diagnostics — Jim and his team handle every job with expertise, transparency, and care.</p>
     <div class="services-grid">
-      <div class="svc-card"><span class="svc-icon">&#128269;</span><h3 class="svc-name">Engine Diagnostics</h3><p class="svc-desc">State-of-the-art scan tools and deep expertise. We pinpoint the problem fast &mdash; no guesswork, just honest answers.</p></div>
-      <div class="svc-card"><span class="svc-icon">&#128721;</span><h3 class="svc-name">Brake Service</h3><p class="svc-desc">Pads, rotors, calipers, and complete fluid flushes. We keep you stopping safely every mile.</p></div>
-      <div class="svc-card"><span class="svc-icon">&#128756;</span><h3 class="svc-name">Oil Changes</h3><p class="svc-desc">Quality fluids matched to your manufacturer's specs. Fast, clean, and done right every time.</p></div>
-      <div class="svc-card"><span class="svc-icon">&#10052;</span><h3 class="svc-name">AC Repair</h3><p class="svc-desc">Recharge, leak detection, and compressor service. Stay cool through California summers.</p></div>
-      <div class="svc-card"><span class="svc-icon">&#9889;</span><h3 class="svc-name">Battery &amp; Electrical</h3><p class="svc-desc">Testing, replacement, alternator, starter, and wiring diagnosis. We handle every electrical challenge.</p></div>
-      <div class="svc-card"><span class="svc-icon">&#128270;</span><h3 class="svc-name">Pre-Purchase Inspections</h3><p class="svc-desc">Full inspection before you buy a used vehicle. Don't let a hidden problem cost you thousands.</p></div>
-      <div class="svc-card"><span class="svc-icon">&#9881;</span><h3 class="svc-name">Transmission Service</h3><p class="svc-desc">Fluid changes, filter service, and full diagnostics to keep your drivetrain in top condition.</p></div>
-      <div class="svc-card"><span class="svc-icon">&#128260;</span><h3 class="svc-name">Tire &amp; Alignment</h3><p class="svc-desc">Rotation, balancing, and precision wheel alignment for even wear and confident handling.</p></div>
+      <div class="svc-card">
+        <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=600&q=80" alt="Engine diagnostics" loading="lazy"/></div>
+        <span class="svc-icon" aria-hidden="true">&#128269;</span>
+        <h3 class="svc-name">Engine Diagnostics</h3>
+        <p class="svc-desc">State-of-the-art scan tools and deep expertise. We pinpoint the problem fast — no guesswork, just honest answers.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=600&q=80" alt="Brake service" loading="lazy"/></div>
+        <span class="svc-icon" aria-hidden="true">&#128721;</span>
+        <h3 class="svc-name">Brake Service</h3>
+        <p class="svc-desc">Pads, rotors, calipers, and complete fluid flushes. We keep you stopping safely every mile.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&q=80" alt="Oil change service" loading="lazy"/></div>
+        <span class="svc-icon" aria-hidden="true">&#128738;</span>
+        <h3 class="svc-name">Oil Changes</h3>
+        <p class="svc-desc">Quality fluids matched to your manufacturer's specs. Fast, clean, and done right every time.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80" alt="AC repair service" loading="lazy"/></div>
+        <span class="svc-icon" aria-hidden="true">&#10052;</span>
+        <h3 class="svc-name">AC Repair</h3>
+        <p class="svc-desc">Recharge, leak detection, and compressor service. Stay cool through California summers.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=600&q=80" alt="Battery and electrical service" loading="lazy"/></div>
+        <span class="svc-icon" aria-hidden="true">&#9889;</span>
+        <h3 class="svc-name">Battery &amp; Electrical</h3>
+        <p class="svc-desc">Testing, replacement, alternator, starter, and wiring diagnosis. We handle every electrical challenge.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=600&q=80" alt="Pre-purchase vehicle inspection" loading="lazy"/></div>
+        <span class="svc-icon" aria-hidden="true">&#128270;</span>
+        <h3 class="svc-name">Pre-Purchase Inspections</h3>
+        <p class="svc-desc">Full inspection before you buy a used vehicle. Don't let a hidden problem cost you thousands.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Transmission service" loading="lazy"/></div>
+        <span class="svc-icon" aria-hidden="true">&#9881;</span>
+        <h3 class="svc-name">Transmission Service</h3>
+        <p class="svc-desc">Fluid changes, filter service, and full diagnostics to keep your drivetrain in top condition.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=600&q=80" alt="Tire and alignment service" loading="lazy"/></div>
+        <span class="svc-icon" aria-hidden="true">&#128260;</span>
+        <h3 class="svc-name">Tire &amp; Alignment</h3>
+        <p class="svc-desc">Rotation, balancing, and precision wheel alignment for even wear and confident handling.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -257,12 +328,12 @@
     <h2 class="section-title">A Shop Built for the Work</h2>
     <p class="section-sub" style="margin-bottom:44px;">Modern equipment, clean bays, and technicians who take pride in every job they do.</p>
     <div class="gallery-grid">
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&q=80" alt="Bell Automotive shop interior" loading="lazy" /><div class="gallery-overlay"><span class="gallery-caption">Our Shop</span></div></div>
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=800&q=80" alt="Engine diagnostics" loading="lazy" /><div class="gallery-overlay"><span class="gallery-caption">Engine Work</span></div></div>
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&q=80" alt="Brake service" loading="lazy" /><div class="gallery-overlay"><span class="gallery-caption">Brake Service</span></div></div>
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80" alt="Auto service bay" loading="lazy" /><div class="gallery-overlay"><span class="gallery-caption">Service Bay</span></div></div>
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80" alt="Vehicle on lift" loading="lazy" /><div class="gallery-overlay"><span class="gallery-caption">Professional Lifts</span></div></div>
-      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=800&q=80" alt="Expert technician" loading="lazy" /><div class="gallery-overlay"><span class="gallery-caption">Expert Technicians</span></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&q=80" alt="Bell Automotive shop interior" loading="lazy"/><div class="gallery-overlay"><span class="gallery-caption">Our Shop</span></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=800&q=80" alt="Engine diagnostics and repair" loading="lazy"/><div class="gallery-overlay"><span class="gallery-caption">Engine Work</span></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=800&q=80" alt="Professional brake service" loading="lazy"/><div class="gallery-overlay"><span class="gallery-caption">Brake Service</span></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=800&q=80" alt="Auto service bay" loading="lazy"/><div class="gallery-overlay"><span class="gallery-caption">Service Bay</span></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80" alt="Vehicle lifted for service" loading="lazy"/><div class="gallery-overlay"><span class="gallery-caption">Professional Lifts</span></div></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1625047509248-ec889cbff17f?w=800&q=80" alt="Bell Automotive certified technician" loading="lazy"/><div class="gallery-overlay"><span class="gallery-caption">Expert Technicians</span></div></div>
     </div>
   </div>
 </section>
@@ -275,26 +346,23 @@
         <div class="about-big" aria-hidden="true">25+</div>
         <div class="about-label">Years Serving Shasta County</div>
         <p class="about-p">Jim opened Bell Automotive in 1999 with a simple promise: treat every customer's vehicle like his own. Over two decades later, that promise is still the foundation of everything we do.</p>
-        <p class="about-p">As a family-owned shop in the heart of Anderson, we've built our reputation one honest repair at a time. We serve Anderson, Redding, and all of Shasta County &mdash; and our customers keep coming back because they know they'll never be oversold here.</p>
+        <p class="about-p">As a family-owned shop in the heart of Anderson, we've built our reputation one honest repair at a time. We serve Anderson, Redding, and all of Shasta County — and our customers keep coming back because they know they'll never be oversold here.</p>
         <ul class="about-list">
-          <li><span class="check">&#10003;</span> All Makes &amp; Models Serviced</li>
-          <li><span class="check">&#10003;</span> Free Estimates on Major Work</li>
-          <li><span class="check">&#10003;</span> 4.8 &#9733; Google Rating &middot; 90+ Reviews</li>
-          <li><span class="check">&#10003;</span> Mon&ndash;Fri 8:00 AM &ndash; 5:30 PM</li>
-          <li><span class="check">&#10003;</span> Saturday 8:00 AM &ndash; 2:00 PM</li>
+          <li><span class="check">&#10003;</span>All Makes &amp; Models Serviced</li>
+          <li><span class="check">&#10003;</span>Free Estimates on Major Work</li>
+          <li><span class="check">&#10003;</span>4.8 &#9733; Google Rating · 90+ Reviews</li>
+          <li><span class="check">&#10003;</span>Mon-Fri 8:00 AM - 5:30 PM</li>
+          <li><span class="check">&#10003;</span>Saturday 8:00 AM - 2:00 PM</li>
         </ul>
       </div>
       <div class="about-visual">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Experienced auto technician at Bell Automotive" class="about-img" loading="lazy" />
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Experienced auto technician at Bell Automotive Service in Anderson CA" class="about-img" loading="lazy"/>
         <div class="about-card">
-          <div class="ac-num">4.8&#9733;</div>
-          <div class="ac-label">Google Rating</div>
+          <div class="ac-num">4.8&#9733;</div><div class="ac-label">Google Rating</div>
           <div class="ac-divider"></div>
-          <div class="ac-num" style="font-size:1.9rem;">90+</div>
-          <div class="ac-label">Verified Reviews</div>
+          <div class="ac-num" style="font-size:1.9rem;">90+</div><div class="ac-label">Verified Reviews</div>
           <div class="ac-divider"></div>
-          <div class="ac-num" style="font-size:1.9rem;">'99</div>
-          <div class="ac-label">Established</div>
+          <div class="ac-num" style="font-size:1.9rem;">'99</div><div class="ac-label">Established</div>
         </div>
       </div>
     </div>
@@ -309,24 +377,24 @@
       <div class="google-badge">
         <span class="g-logo">G</span>
         <span class="g-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <span class="g-count">4.8 Stars &nbsp;&middot;&nbsp; 90+ Verified Reviews</span>
+        <span class="g-count">4.8 Stars &nbsp;·&nbsp; 90+ Verified Reviews</span>
       </div>
     </div>
     <div class="reviews-grid">
       <article class="review-card">
-        <div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="r-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="r-quote">Jim and his team are the only people I trust with my truck. Honest, fast, and priced right. They diagnosed an issue two other shops missed. Five stars, every time.</p>
-        <div class="r-author"><div class="r-avatar">MT</div><div><div class="r-name">Mike T.</div><div class="r-loc">Anderson, CA</div></div><div class="r-source">Google</div></div>
+        <div class="r-author"><div class="r-avatar" aria-hidden="true">MT</div><div><div class="r-name">Mike T.</div><div class="r-loc">Anderson, CA</div></div><div class="r-source">Google</div></div>
       </article>
       <article class="review-card">
-        <div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="r-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="r-quote">Took my car in for a pre-purchase inspection and they were incredibly thorough. Found a hidden issue that saved me from a bad deal. Absolutely worth every penny.</p>
-        <div class="r-author"><div class="r-avatar">SK</div><div><div class="r-name">Sarah K.</div><div class="r-loc">Redding, CA</div></div><div class="r-source">Google</div></div>
+        <div class="r-author"><div class="r-avatar" aria-hidden="true">SK</div><div><div class="r-name">Sarah K.</div><div class="r-loc">Redding, CA</div></div><div class="r-source">Google</div></div>
       </article>
       <article class="review-card">
-        <div class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="r-stars" aria-label="5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="r-quote">Been bringing my family's vehicles here for years. They never upsell you, explain everything clearly, and the work is always done right. Best shop in Shasta County.</p>
-        <div class="r-author"><div class="r-avatar">DR</div><div><div class="r-name">David R.</div><div class="r-loc">Shasta County, CA</div></div><div class="r-source">Google</div></div>
+        <div class="r-author"><div class="r-avatar" aria-hidden="true">DR</div><div><div class="r-name">David R.</div><div class="r-loc">Shasta County, CA</div></div><div class="r-source">Google</div></div>
       </article>
     </div>
   </div>
@@ -337,14 +405,14 @@
   <div class="cta-inner">
     <span class="cta-eyebrow">Get in Touch</span>
     <h2 class="cta-title">Ready to Book Your Service?</h2>
-    <p class="cta-sub">Give us a call &mdash; Jim and the team are ready to help. No pressure, no upselling. Just honest automotive service you can count on.</p>
-    <a href="tel:+15303651599" class="cta-phone">(530) 365-1599</a>
-    <p class="cta-hours">Mon&ndash;Fri 8:00 AM &ndash; 5:30 PM &nbsp;&middot;&nbsp; Saturday 8:00 AM &ndash; 2:00 PM &nbsp;&middot;&nbsp; Sunday Closed</p>
+    <p class="cta-sub">Give us a call — Jim and the team are ready to help. No pressure, no upselling. Just honest automotive service you can count on.</p>
+    <a href="tel:+15303651599" class="cta-phone" aria-label="Call Bell Automotive at 530-365-1599">(530) 365-1599</a>
+    <p class="cta-hours">Mon-Fri 8:00 AM - 5:30 PM &nbsp;·&nbsp; Saturday 8:00 AM - 2:00 PM &nbsp;·&nbsp; Sunday Closed</p>
     <a href="tel:+15303651599" class="btn-cta">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012.81 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.84a16 16 0 006.29 6.29l1.1-1.1a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-      Call Now &mdash; It's Free to Ask
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.86 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012.81 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.84a16 16 0 006.29 6.29l1.1-1.1a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Call Now — It's Free to Ask
     </a>
-    <p class="cta-address">2130 Balls Ferry Rd, Anderson, CA 96007 &nbsp;&middot;&nbsp; <a href="mailto:info@bellautomotiveservice.com">info@bellautomotiveservice.com</a></p>
+    <p class="cta-address">2130 Balls Ferry Rd, Anderson, CA 96007 &nbsp;·&nbsp; <a href="mailto:info@bellautomotiveservice.com">info@bellautomotiveservice.com</a></p>
   </div>
 </section>
 
@@ -354,9 +422,7 @@
       <div>
         <a href="#" class="footer-logo">Bell<span class="dot">.</span>Automotive</a>
         <p class="footer-tagline">Family-owned auto repair serving Anderson, Redding, and Shasta County since 1999. Honest service. Fair prices. Every time.</p>
-        <div class="footer-badges-row">
-          <span class="f-badge">Since 1999</span><span class="f-badge">Family Owned</span><span class="f-badge">4.8 &#9733; Google</span>
-        </div>
+        <div class="footer-badges-row"><span class="f-badge">Since 1999</span><span class="f-badge">Family Owned</span><span class="f-badge">4.8 &#9733; Google</span></div>
       </div>
       <div>
         <p class="footer-col-title">Services</p>
@@ -372,7 +438,7 @@
         <div class="fc"><span class="fc-icon">&#128205;</span><p class="fc-text">2130 Balls Ferry Rd<br>Anderson, CA 96007</p></div>
         <div class="fc"><span class="fc-icon">&#128222;</span><p class="fc-text"><a href="tel:+15303651599">(530) 365-1599</a></p></div>
         <div class="fc"><span class="fc-icon">&#9993;</span><p class="fc-text"><a href="mailto:info@bellautomotiveservice.com">info@bellautomotiveservice.com</a></p></div>
-        <div class="fc"><span class="fc-icon">&#128336;</span><p class="fc-text">Mon&ndash;Fri: 8:00 AM &ndash; 5:30 PM<br>Saturday: 8:00 AM &ndash; 2:00 PM<br>Sunday: Closed</p></div>
+        <div class="fc"><span class="fc-icon">&#128336;</span><p class="fc-text">Mon-Fri: 8:00 AM - 5:30 PM<br>Saturday: 8:00 AM - 2:00 PM<br>Sunday: Closed</p></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -393,21 +459,25 @@
     lastY = y;
   }, { passive: true });
   const htl = gsap.timeline({ delay: 0.1 });
-  htl.from('.hero-eyebrow', { y: 22, opacity: 0, duration: 0.65, ease: 'power3.out' })
-     .from('.hero-title .line-inner', { y: '115%', opacity: 0, duration: 0.78, stagger: 0.13, ease: 'power3.out' }, '-=0.35')
-     .from('.hero-sub .line-inner', { y: 22, opacity: 0, duration: 0.62, ease: 'power3.out' }, '-=0.45')
-     .from('.hero-ctas', { y: 20, opacity: 0, duration: 0.55, ease: 'power3.out' }, '-=0.35')
-     .from('.hero-badges', { y: 16, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
-     .from('.hero-visual', { x: 55, opacity: 0, duration: 0.9, ease: 'power3.out' }, '-=0.95')
-     .from('.hero-rating', { scale: 0.75, opacity: 0, duration: 0.5, ease: 'back.out(1.8)' }, '-=0.35');
+  htl
+    .from('.hero-eyebrow', { y: 22, opacity: 0, duration: 0.65, ease: 'power3.out' })
+    .from('.hero-title .line-inner', { y: '115%', opacity: 0, duration: 0.78, stagger: 0.13, ease: 'power3.out' }, '-=0.35')
+    .from('.hero-sub .line-inner', { y: 22, opacity: 0, duration: 0.62, ease: 'power3.out' }, '-=0.45')
+    .from('.hero-ctas', { y: 20, opacity: 0, duration: 0.55, ease: 'power3.out' }, '-=0.35')
+    .from('.hero-badges', { y: 16, opacity: 0, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+    .from('.hero-visual', { x: 55, opacity: 0, duration: 0.9, ease: 'power3.out' }, '-=0.95')
+    .from('.hero-rating', { scale: 0.75, opacity: 0, duration: 0.5, ease: 'back.out(1.8)' }, '-=0.35');
   gsap.from('.svc-card', { scrollTrigger: { trigger: '.services-grid', start: 'top 85%' }, y: 44, opacity: 0, duration: 0.65, stagger: 0.08, ease: 'power3.out' });
   document.querySelectorAll('.count-num').forEach(el => {
     const target = parseFloat(el.dataset.target);
     const isDecimal = !!el.dataset.decimal;
-    ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => {
-      const obj = { val: 0 };
-      gsap.to(obj, { val: target, duration: 2.1, ease: 'power2.out', onUpdate() { el.textContent = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val); } });
-    }});
+    ScrollTrigger.create({
+      trigger: el, start: 'top 88%', once: true,
+      onEnter: () => {
+        const obj = { val: 0 };
+        gsap.to(obj, { val: target, duration: 2.1, ease: 'power2.out', onUpdate() { el.textContent = isDecimal ? obj.val.toFixed(1) : Math.round(obj.val); } });
+      }
+    });
   });
   gsap.from('.stat-item', { scrollTrigger: { trigger: '.stats-band', start: 'top 85%' }, y: 34, opacity: 0, duration: 0.65, stagger: 0.12, ease: 'power3.out' });
   document.querySelectorAll('.gallery-item').forEach((item, i) => {
@@ -420,16 +490,6 @@
   gsap.utils.toArray('.eyebrow, .section-title, .section-sub').forEach(el => {
     gsap.from(el, { scrollTrigger: { trigger: el, start: 'top 90%' }, y: 22, opacity: 0, duration: 0.62, ease: 'power3.out' });
   });
-  (function() {
-    const tb = document.querySelector('.top-bar');
-    if (!tb) return;
-    const now = new Date();
-    const pst = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }));
-    const day = pst.getDay();
-    const h = pst.getHours();
-    const isOpen = (day >= 1 && day <= 5 && h >= 8 && h < 17) || (day === 6 && h >= 8 && h < 14);
-    if (!isOpen) tb.style.background = '#1a0f0a';
-  })();
 </script>
 </body>
-</html>
+  </html>
